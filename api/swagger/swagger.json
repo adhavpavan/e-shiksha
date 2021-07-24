@@ -1,0 +1,534 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "Identity Service"
+  },
+  "host": "3.93.144.141:4000",
+  "basePath": "/api/v1",
+  "schemes": ["http", "https"],
+  "consumes": ["application/json", "application/x-www-form-urlencoded"],
+  "produces": ["application/json", "text/html"],
+  "paths": {
+    "/resetpwd": {
+      "x-swagger-router-controller": "resetpwd",
+      "get": {
+        "operationId": "getPwd",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      },
+      "post": {
+        "operationId": "resetPwd",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Optional description in *Markdown*",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "type": "string"
+                },
+                "newPassword": {
+                  "type": "string"
+                },
+                "confirmPassword": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "$ref": "#/definitions/UserCreateResponse"
+            }
+          }
+        }
+      }
+    },
+    "/forgotpwd": {
+      "x-swagger-router-controller": "forgotpwd",
+      "post": {
+        "operationId": "forgotPwd",
+        "description": "user will get resetPassword Link",
+        "parameters": [
+          {
+            "name": "forgotpwd",
+            "description": "Forgot Password for User",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ForgotPwdSchema"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "$ref": "#/definitions/UserCreateResponse"
+            }
+          }
+        }
+      }
+    },
+    "/questions": {
+      "x-swagger-router-controller": "question",
+      "get": {
+        "operationId": "getQuestions",
+        "description": "get Questions based on filter max 50 questions",
+        "parameters": [
+          {
+            "name": "DifficultyLevel",
+            "description": "Difficulty of Questions",
+            "type": "number",
+            "in": "query"
+          },
+          {
+            "name": "Subject",
+            "description": "Subject name for exam",
+            "type": "string",
+            "in": "query"
+          },
+          {
+            "name": "limit",
+            "description": "Number of Records in response",
+            "type": "number",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "$ref": "#/definitions/QuestionResponse"
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "x-swagger-router-controller": "login",
+      "post": {
+        "operationId": "loginUser",
+        "description": "allow user to login using username and password",
+        "parameters": [
+          {
+            "name": "login",
+            "description": "User Login",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginSchema"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "$ref": "#/definitions/LoginResponse"
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "x-swagger-router-controller": "user",
+      "get": {
+        "operationId": "getUsers",
+        "description": "Get all Users",
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "$ref": "#/definitions/GetUserListResponse"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createUser",
+        "description": "Creates a new user",
+        "parameters": [
+          {
+            "name": "title",
+            "description": "User Details",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/UserCreateResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/movie/{id}": {
+      "x-swagger-router-controller": "movie",
+      "put": {
+        "operationId": "update",
+        "description": "update a movie",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Movie id",
+            "type": "string",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "title",
+            "description": "Movie properties",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Movie"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/GeneralResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "delMovie",
+        "description": "delete a movie",
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Movie id",
+            "type": "string",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/GeneralResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/swagger": {
+      "x-swagger-pipe": "swagger_raw"
+    }
+  },
+  "definitions": {
+    "ForgotPwdSchema": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        }
+      },
+      "required": ["email"]
+    },
+    "QuestionResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "success": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "string"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "Question": {
+                  "type": "string"
+                },
+                "Subject": {
+                  "type": "string"
+                },
+                "Options": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "Marks": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "LoginResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "success": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "string"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "UserCreateResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "success": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "string"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "LoginSchema": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "required": ["email", "password"]
+    },
+    "GetUserListResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "success": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "string"
+            },
+            "payload": {
+              "type": "object",
+              "properties": {
+                "users": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "firstName": {
+                        "type": "string"
+                      },
+                      "lastName": {
+                        "type": "string"
+                      },
+                      "userType": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "mobile": {
+                        "type": "number"
+                      },
+                      "DOB": {
+                        "type": "string"
+                      },
+                      "organization": {
+                        "type": "string"
+                      },
+                      "lastLoggedIn": {
+                        "type": "string"
+                      },
+                      "createdBy": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "userType": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "mobile": {
+          "type": "number"
+        },
+        "DOB": {
+          "type": "string"
+        },
+        "organization": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        }
+      },
+      "required": ["firstName", "lastName", "userType", "email", "createdBy", "organization", "password"]
+    },
+    "GeneralResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "number",
+          "description": "returns 1 if successful"
+        },
+        "description": {
+          "type": "string",
+          "description": "a short comment"
+        }
+      },
+      "required": ["success", "description"]
+    },
+    "Movie": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "task object name"
+        },
+        "year": {
+          "type": "number",
+          "description": "task description"
+        }
+      },
+      "required": ["title", "year"]
+    },
+    "ErrorResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "success": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "string"
+            },
+            "payload": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    }
+  }
+}

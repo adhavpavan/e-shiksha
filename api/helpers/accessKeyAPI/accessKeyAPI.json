@@ -1,0 +1,54 @@
+{
+  "API": [
+    {
+      "PATH": "/userIdentity/v1",
+      "METHOD": "POST",
+      "LEVEL": "ADMIN"
+    },
+    {
+      "PATH": "/userIdentity/v1",
+      "METHOD": "GET",
+      "LEVEL": "ADMIN"
+    },
+    {
+      "PATH": "/userIdentity/v1/passwordTemplate",
+      "METHOD": "POST",
+      "LEVEL": "ADMIN"
+    },
+    {
+      "PATH": "/userIdentity/v1/passwordTemplate",
+      "METHOD": "PUT",
+      "LEVEL": "ADMIN"
+    },
+    {
+      "PATH": "/userIdentity/v1/passwordTemplate",
+      "METHOD": "GET",
+      "LEVEL": "ADMIN"
+    },
+    {
+      "PATH": "/userIdentity/v1/passwordTemplate",
+      "METHOD": "DELETE",
+      "LEVEL": "ADMIN"
+    },
+    {
+      "PATH": "/userIdentity/v1/eciperTemplate",
+      "METHOD": "POST",
+      "LEVEL": "ADMIN"
+    },
+    {
+      "PATH": "/userIdentity/v1/eciperTemplate",
+      "METHOD": "PUT",
+      "LEVEL": "ADMIN"
+    },
+    {
+      "PATH": "/userIdentity/v1/eciperTemplate",
+      "METHOD": "GET",
+      "LEVEL": "ADMIN"
+    },
+    {
+      "PATH": "/userIdentity/v1/eciperTemplate",
+      "METHOD": "DELETE",
+      "LEVEL": "ADMIN"
+    }
+  ]
+}
